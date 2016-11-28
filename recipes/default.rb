@@ -33,3 +33,20 @@ template '/etc/rkhunter.conf.local' do
   group 0
   mode 00644
 end
+
+template '/usr/local/bin/analyze_rkhunter_log' do
+  source 'analyze_rkhunter_log.erb'
+  owner 'root'
+  group 0
+  mode 00700
+  variables(
+    slack_webhook_url: node['rkhunter']['slack_webhook_url']
+  )
+end
+
+cron 'check rkhunter log' do
+  user 'root'
+  minute '0'
+  hour '14'
+  command '/usr/local/bin/analyze_rkhunter_log'
+end

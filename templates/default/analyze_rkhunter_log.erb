@@ -1,0 +1,21 @@
+#!/bin/bash
+
+RKHUNTER_LOG="/var/log/rkhunter.log"
+LAST_UPDATED="/tmp/rkhunter_last_updated"
+
+if [ -f "$LAST_UPDATED" ] && [ "$(cat $LAST_UPDATED)" == "$(stat -c '%y' $RKHUNTER_LOG)" ]; then
+  exit 0
+else
+  stat -c '%y' $RKHUNTER_LOG > $LAST_UPDATED
+fi
+
+SUSPECT_FILES=$(grep 'Suspect files: ' $RKHUNTER_LOG | tail -n1 | awk '{print $NF }')
+POSSIBLE_ROOTKITS=$(grep 'Possible rootkits: ' $RKHUNTER_LOG | tail -n1 | awk '{print $NF }')
+
+if [ ! -z "$SUSPECT_FILES" ] && [ ! -z "$POSSIBLE_ROOTKITS" ]; then
+  if [ "$SUSPECT_FILES" != "0" ] || [ "$POSSIBLE_ROOTKITS" != "0" ]; then
+    curl -s -X POST -H 'Content-type: application/json' --data "{'username': 'RKHunter', 'text': '*`hostname -f`* had *${SUSPECT_FILES}* suspect files and *${POSSIBLE_ROOTKITS}* and possible rootkits.'}" <%= @slack_webhook_url %> > /dev/null
+  fi
+fi
+
+exit 0

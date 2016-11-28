@@ -16,3 +16,5 @@ default['rkhunter']['allowdevfile'] = []
 default['rkhunter']['port_whitelist'] = []
 default['rkhunter']['disable_unhide'] = '2'
 
+default['rkhunter']['slack_webhook_url'] = ''
+
