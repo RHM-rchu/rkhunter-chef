@@ -14,3 +14,5 @@ default['rkhunter']['allowhiddendir'] = []
 default['rkhunter']['allowhiddenfile'] = []
 default['rkhunter']['allowdevfile'] = []
 default['rkhunter']['port_whitelist'] = []
+default['rkhunter']['disable_unhide'] = '2'
+

@@ -1,0 +1,17 @@
+ALLOW_SSH_ROOT_USER=<%= node['rkhunter']['allow_ssh_root_user'] %>
+<% node['rkhunter']['scriptwhitelist'].each do |item| %>
+SCRIPTWHITELIST=<%= item %>
+<% end %>
+<% node['rkhunter']['allowhiddendir'].each do |item| %>
+ALLOWHIDDENDIR=<%= item %>
+<% end %>
+<% node['rkhunter']['allowhiddenfile'].each do |item| %>
+ALLOWHIDDENFILE=<%= item %>
+<% end %>
+<% node['rkhunter']['allowdevfile'].each do |item| %>
+ALLOWDEVFILE=<%= item %>
+<% end %>
+<% node['rkhunter']['port_whitelist'].each do |item| %>
+PORT_WHITELIST="<%= item %>"
+<% end %>
+DISABLE_UNHIDE=<%= node['rkhunter']['disable_unhide'] %>

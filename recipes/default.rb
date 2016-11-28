@@ -17,7 +17,7 @@
 # limitations under the License.
 
 package 'rkhunter' do
-  action :upgrade
+  action :install
 end
 
 template '/etc/default/rkhunter' do
@@ -27,8 +27,8 @@ template '/etc/default/rkhunter' do
   mode 00644
 end
 
-template '/etc/rkhunter.conf' do
-  source 'rkhunter.conf.erb'
+template '/etc/rkhunter.conf.local' do
+  source 'rkhunter.conf.local.erb'
   owner 'root'
   group 0
   mode 00644
